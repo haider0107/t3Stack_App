@@ -64,8 +64,8 @@ function Navbar() {
         console.log(error);
       }
     };
-    
-    getUser();
+
+    void getUser();
   }, [value]);
 
   return (
@@ -80,7 +80,7 @@ function Navbar() {
               indicatorColor="secondary"
               textColor="inherit"
               value={value}
-              onChange={(e, val) => setValue(val)}
+              onChange={(e, val: number) => setValue(val)}
             >
               <Tab label="Categories"></Tab>
               <Tab label="Sale"></Tab>

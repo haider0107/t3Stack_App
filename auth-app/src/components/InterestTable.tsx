@@ -92,7 +92,7 @@ function InterestTable() {
       }
     };
 
-    fetchUserInterest();
+    void fetchUserInterest();
   }, []);
 
   useEffect(() => {
@@ -109,7 +109,7 @@ function InterestTable() {
       }
     };
 
-    fetchTableData();
+    void fetchTableData();
   }, [page, rowsPerPage]);
 
   return (
