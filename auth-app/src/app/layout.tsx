@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import Navbar from "~/components/Navbar";
 
 export const metadata = {
   title: "ECOMMERCE",
@@ -14,7 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+        <AppRouterCacheProvider>
+          <Navbar />
+          {children}
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
         id: true,
       },
     });
-    console.log(savedUser);
+    console.log("Saved user" + savedUser);
 
     //send verification email
 
@@ -66,9 +66,13 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       // Handle validation errors
+      console.log(error);
+
       return NextResponse.json({ error: error.errors }, { status: 400 });
     } else {
       // Handle other errors
+      console.log(error);
+
       return NextResponse.json(
         { error: "Internal server error" },
         { status: 500 },

@@ -66,6 +66,7 @@ export const sendEmail = async ({ email, emailType, userId }: params) => {
       },
     });
 
+
     const mailOptions = {
       from: process.env.USER,
       to: email,
@@ -76,12 +77,16 @@ export const sendEmail = async ({ email, emailType, userId }: params) => {
 
     const mailresponse = await transport.sendMail(mailOptions);
     return mailresponse;
-  } catch (error: unknown) {
+  } catch (error) {
     if (error instanceof Error) {
+      console.log(error);
+
       throw new Error(error.message);
     } else {
       // Handle the case where error is not an instance of Error
       // For example, you might want to log the error or throw a new Error with a generic message
+      console.log(error);
+
       console.error("An unknown error occurred:", error);
       throw new Error("An unknown error occurred");
     }

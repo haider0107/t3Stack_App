@@ -1,10 +1,12 @@
+"use client";
+
 import React from "react";
-import SignUp from "~/components/Auth/SignUp";
+import InterestTable from "~/components/InterestTable";
 
 function page() {
   return (
     <div>
-      <SignUp />
+      <InterestTable />
     </div>
   );
 }

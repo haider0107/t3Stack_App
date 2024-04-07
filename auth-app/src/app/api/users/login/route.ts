@@ -42,6 +42,19 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!user.isVerified) {
+      await sendEmail({
+        email: user.email,
+        emailType: "VERIFY",
+        userId: user.id,
+      });
+
+      return NextResponse.json(
+        { message: "User not verified", isVerified: false },
+        { status: 200 },
+      );
+    }
+
     // jwt payload
     const tokenData = {
       id: user.id,
@@ -71,9 +84,13 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       // Handle validation errors
+      console.log(error);
+
       return NextResponse.json({ error: error.errors }, { status: 400 });
     } else {
       // Handle other errors
+      console.log(error);
+
       return NextResponse.json(
         { error: "Internal server error" },
         { status: 500 },
