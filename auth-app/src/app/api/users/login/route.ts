@@ -11,9 +11,9 @@ interface requestBody {
   password: string;
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const reqBody: requestBody = await request.json();
+    const reqBody = (await request.json()) as requestBody;
 
     loginSchema.parse(reqBody);
 

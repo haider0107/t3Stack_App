@@ -13,7 +13,7 @@ interface requestBody {
 
 export async function POST(request: NextRequest) {
   try {
-    const reqBody: requestBody = await request.json();
+    const reqBody = (await request.json()) as requestBody;
 
     // validate request body
     signupSchema.parse(reqBody);

@@ -55,7 +55,7 @@ export const sendEmail = async ({ email, emailType, userId }: params) => {
       });
     }
 
-    let transport = nodemailer.createTransport({
+    const transport = nodemailer.createTransport({
       host: process.env.HOST,
       port: Number(process.env.SMTP_PORT),
       secure: true,
