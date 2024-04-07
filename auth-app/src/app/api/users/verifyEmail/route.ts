@@ -7,7 +7,7 @@ interface requestBody {
 
 export async function POST(request: NextRequest) {
   try {
-    const reqBody: requestBody = await request.json();
+    const reqBody = (await request.json()) as requestBody;
     const { token } = reqBody;
 
     const user = await db.user.findFirst({
