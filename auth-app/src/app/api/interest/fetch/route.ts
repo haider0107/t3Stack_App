@@ -4,7 +4,7 @@ import { db } from "~/server/db";
 
 export async function GET(request: NextRequest) {
   try {
-    const userId = await getDataFromToken(request);
+    const userId = getDataFromToken(request);
 
     const page = request.nextUrl.searchParams.get("page");
     const pageSize = request.nextUrl.searchParams.get("pageSize");
@@ -17,8 +17,18 @@ export async function GET(request: NextRequest) {
       data,
       totalData,
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    } else {
+      // Handle the case where error is not an instance of Error
+      // For example, you might want to log the error or throw a new Error with a generic message
+      console.error("An unknown error occurred:", error);
+      return NextResponse.json(
+        { error: "An unknown error occurred" },
+        { status: 500 },
+      );
+    }
   }
 }
 

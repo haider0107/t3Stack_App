@@ -17,9 +17,15 @@ const emailBody = (
   }
 };
 
-export const sendEmail = async ({ email, emailType, userId }: any) => {
+interface params {
+  email: string;
+  emailType: string;
+  userId: string;
+}
+
+export const sendEmail = async ({ email, emailType, userId }: params) => {
   try {
-    var hashedToken = "",
+    let hashedToken = "",
       randomDigit = "";
 
     // Condition to verify email type
@@ -70,7 +76,14 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
 
     const mailresponse = await transport.sendMail(mailOptions);
     return mailresponse;
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      // Handle the case where error is not an instance of Error
+      // For example, you might want to log the error or throw a new Error with a generic message
+      console.error("An unknown error occurred:", error);
+      throw new Error("An unknown error occurred");
+    }
   }
 };

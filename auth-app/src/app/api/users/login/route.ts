@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error: any) {
+  } catch (error) {
     if (error instanceof z.ZodError) {
       // Handle validation errors
       return NextResponse.json({ error: error.errors }, { status: 400 });
