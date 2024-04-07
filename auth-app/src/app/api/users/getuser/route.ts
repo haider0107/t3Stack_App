@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
         username: true,
       },
     });
+    
     return NextResponse.json({
       mesaaage: "User found",
       data: user,

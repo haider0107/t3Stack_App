@@ -21,6 +21,21 @@ model User {
     forgotPasswordTokenExpiry DateTime?
     verifyToken    String?
     verifyTokenExpiry DateTime?
+    interests   UserInterest[]
 
     @@index([username])
+}
+
+model UserInterest{
+    id       Int    @id @default(autoincrement())
+    user     User   @relation(fields: [userId], references: [id])
+    interestTable InterestTable @relation(fields: [interestId], references: [id])
+    userId   String
+    interestId  Int  
+}
+
+model InterestTable {
+    id       Int    @id @default(autoincrement())
+    name     String
+    UserInterest    UserInterest[]
 }
