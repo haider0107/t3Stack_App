@@ -5,9 +5,15 @@ import { signupSchema } from "~/schemas/auth";
 import { db } from "~/server/db";
 import { sendEmail } from "~/helper/mailer";
 
+interface requestBody {
+  username: string;
+  email: string;
+  password: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const reqBody = await request.json();
+    const reqBody: requestBody = await request.json();
 
     // validate request body
     signupSchema.parse(reqBody);

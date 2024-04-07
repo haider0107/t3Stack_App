@@ -35,11 +35,16 @@ export async function GET(request: NextRequest) {
   }
 }
 
+interface RequestBody {
+  id: string; // Adjust the type as necessary
+  // Add other properties as needed
+ }
+
 export async function POST(request: NextRequest) {
   try {
-    const userId = await getDataFromToken(request);
+    const userId = getDataFromToken(request);
 
-    const reqBody = await request.json();
+    const reqBody:RequestBody = await request.json();
     const { id } = reqBody;
 
     let newInterest;

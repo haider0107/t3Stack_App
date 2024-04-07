@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "~/server/db";
 
+interface requestBody {
+  token: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const reqBody = await request.json();
+    const reqBody: requestBody = await request.json();
     const { token } = reqBody;
 
     const user = await db.user.findFirst({

@@ -6,9 +6,14 @@ import { db } from "~/server/db";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "~/helper/mailer";
 
+interface requestBody {
+  email: string;
+  password: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const reqBody = await request.json();
+    const reqBody: requestBody = await request.json();
 
     loginSchema.parse(reqBody);
 
