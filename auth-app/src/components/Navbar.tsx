@@ -18,9 +18,21 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+type userData = {
+  id: string;
+  email: string;
+  username: string;
+};
+
+type response = {
+  data: {
+    data: userData;
+  };
+};
+
 function Navbar() {
   const [value, setValue] = useState(0);
-  const [data, setData] = useState();
+  const [data, setData] = useState<userData>();
   const router = useRouter();
 
   const logout = async () => {
@@ -29,25 +41,30 @@ function Navbar() {
       toast.success("Logout successful");
       setData(undefined);
       router.push("/login");
-    } catch (error: any) {
-      console.log(error.message);
-      toast.error(error.message);
-    }
-  };
-
-  const getUser = async () => {
-    try {
-      const response = await axios.get("/api/users/getuser");
-
-      if (response.data) {
-        setData(response.data.data);
-      }
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        console.log(error.message);
+        toast.error(error.message);
+      } else {
+        console.error("An unknown error occurred:", error);
+        toast.error("An unknown error occurred");
+      }
     }
   };
 
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response: response = await axios.get("/api/users/getuser");
+
+        if (response.data) {
+          setData(response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
     getUser();
   }, [value]);
 

@@ -29,6 +29,13 @@ type DataRowUser = {
   };
 };
 
+type response = {
+  data: {
+    data: DataRow[];
+    totalData: number;
+  };
+};
+
 type DataResponse = {
   data: DataRow[];
   totalCount: number;
@@ -45,42 +52,11 @@ function InterestTable() {
     setPage(value);
   };
 
-  const fetchTableData = async () => {
-    try {
-      const response = await axios.get(
-        `/api/interest/fetch?page=${page}&pageSize=${rowsPerPage}`,
-      );
-
-      setData(response.data.data);
-      setTotalCount(response.data.totalData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchUserInterest = async () => {
-    try {
-      const response: DataRowUser = await axios.get("/api/interest/users");
-
-      console.log(response);
-
-      const ids: number[] = response.data.listUserIntrest.map(
-        (item) => item.interestId,
-      );
-
-      console.log(ids);
-
-      setSelectedIds(ids);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleRadio = async (
     event: React.ChangeEvent<HTMLInputElement>,
     id: number,
   ) => {
-    let urlEndpoint = event.target.checked
+    const urlEndpoint = event.target.checked
       ? "/api/interest/users"
       : `/api/interest/users?id=${id}`;
 
@@ -102,10 +78,37 @@ function InterestTable() {
   };
 
   useEffect(() => {
+    const fetchUserInterest = async () => {
+      try {
+        const response: DataRowUser = await axios.get("/api/interest/users");
+
+        const ids: number[] = response.data.listUserIntrest.map(
+          (item) => item.interestId,
+        );
+
+        setSelectedIds(ids);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchUserInterest();
   }, []);
 
   useEffect(() => {
+    const fetchTableData = async () => {
+      try {
+        const response: response = await axios.get(
+          `/api/interest/fetch?page=${page}&pageSize=${rowsPerPage}`,
+        );
+
+        setData(response.data.data);
+        setTotalCount(response.data.totalData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchTableData();
   }, [page, rowsPerPage]);
 

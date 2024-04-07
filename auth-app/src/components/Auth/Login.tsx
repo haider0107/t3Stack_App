@@ -5,6 +5,12 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+type response = {
+  data: {
+    isVerified: boolean;
+  };
+};
+
 function Login() {
   const router = useRouter();
   const [user, setUser] = React.useState({
@@ -18,7 +24,7 @@ function Login() {
   const onLogin = async () => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/login", user);
+      const response: response = await axios.post("/api/users/login", user);
 
       if (response.data.isVerified === false) {
         console.log(response.data);
@@ -112,7 +118,9 @@ function Login() {
             Log In
           </Button>
           <Box display="flex" alignItems="center" marginTop={3}>
-            <Typography variant="caption">Don't have an account ?</Typography>
+            <Typography variant="caption">
+              Don&lsquo;t have an account ?
+            </Typography>
             <Button
               variant="text"
               sx={{

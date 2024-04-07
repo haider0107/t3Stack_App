@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     path === "/verifyemail" ||
     path === "/";
 
-  const token = request.cookies.get("token")?.value || "";
+  const token = request.cookies.get("token")?.value ?? "";
 
   if (isPublicPath && token) {
     return NextResponse.redirect(new URL("/interests", request.nextUrl));

@@ -52,7 +52,6 @@ export async function POST(request: NextRequest) {
         id: true,
       },
     });
-    console.log("Saved user" + savedUser);
 
     //send verification email
 
